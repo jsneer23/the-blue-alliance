@@ -3816,6 +3816,124 @@
         ]
       }
     },
+    "/district/{district_key}/recap": {
+      "get": {
+        "tags": [
+          "district"
+        ],
+        "description": "Gets a single-year recap associated with the given district key.",
+        "operationId": "getDistrictRecap",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/If-None-Match"
+          },
+          {
+            "$ref": "#/components/parameters/district_key"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "headers": {
+              "Cache-Control": {
+                "description": "The `Cache-Control` header, in particular the `max-age` value, contains the number of seconds the result should be considered valid for. During this time subsequent calls should return from the local cache directly.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Specifies the version of the most recent response. Used by clients in the `If-None-Match` request header.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/District_Recap"
+                }
+              }
+            }
+          },
+          "304": {
+            "$ref": "#/components/responses/NotModified"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/district/{district_abbreviation}/recaps": {
+      "get": {
+        "tags": [
+          "district",
+          "list"
+        ],
+        "description": "Gets a list of recaps associated with the given district abbreviation.",
+        "operationId": "getDistrictRecaps",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/If-None-Match"
+          },
+          {
+            "$ref": "#/components/parameters/district_abbreviation"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "headers": {
+              "Cache-Control": {
+                "description": "The `Cache-Control` header, in particular the `max-age` value, contains the number of seconds the result should be considered valid for. During this time subsequent calls should return from the local cache directly.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Specifies the version of the most recent response. Used by clients in the `If-None-Match` request header.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/District_Recap"
+                  }
+                }
+              }
+            }
+          },
+          "304": {
+            "$ref": "#/components/responses/NotModified"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/district/{district_abbreviation}/history": {
       "get": {
         "tags": [
@@ -8182,7 +8300,7 @@
         "description": "See the 2025 FMS API documentation for a description of each value. https://frc-api-docs.firstinspires.org"
       },
       "Match_Score_Breakdown_2025_Alliance": {
-      "type": "object",
+        "type": "object",
         "properties": {
           "adjustPoints": {
             "type": "integer"
@@ -8201,15 +8319,24 @@
           },
           "autoLineRobot1": {
             "type": "string",
-            "enum": ["No", "Yes"]
+            "enum": [
+              "No",
+              "Yes"
+            ]
           },
           "autoLineRobot2": {
             "type": "string",
-            "enum": ["No", "Yes"]
+            "enum": [
+              "No",
+              "Yes"
+            ]
           },
           "autoLineRobot3": {
             "type": "string",
-            "enum": ["No", "Yes"]
+            "enum": [
+              "No",
+              "Yes"
+            ]
           },
           "autoMobilityPoints": {
             "type": "integer"
@@ -8229,7 +8356,19 @@
               "topRow": {
                 "type": "object",
                 "required": [
-                  "nodeA", "nodeB", "nodeC", "nodeD", "nodeE", "nodeF", "nodeG", "nodeH", "nodeI", "nodeJ", "nodeK", "nodeL"],
+                  "nodeA",
+                  "nodeB",
+                  "nodeC",
+                  "nodeD",
+                  "nodeE",
+                  "nodeF",
+                  "nodeG",
+                  "nodeH",
+                  "nodeI",
+                  "nodeJ",
+                  "nodeK",
+                  "nodeL"
+                ],
                 "properties": {
                   "nodeA": {
                     "type": "boolean"
@@ -8272,7 +8411,19 @@
               "midRow": {
                 "type": "object",
                 "required": [
-                  "nodeA", "nodeB", "nodeC", "nodeD", "nodeE", "nodeF", "nodeG", "nodeH", "nodeI", "nodeJ", "nodeK", "nodeL"],
+                  "nodeA",
+                  "nodeB",
+                  "nodeC",
+                  "nodeD",
+                  "nodeE",
+                  "nodeF",
+                  "nodeG",
+                  "nodeH",
+                  "nodeI",
+                  "nodeJ",
+                  "nodeK",
+                  "nodeL"
+                ],
                 "properties": {
                   "nodeA": {
                     "type": "boolean"
@@ -8315,7 +8466,19 @@
               "botRow": {
                 "type": "object",
                 "required": [
-                  "nodeA", "nodeB", "nodeC", "nodeD", "nodeE", "nodeF", "nodeG", "nodeH", "nodeI", "nodeJ", "nodeK", "nodeL"],
+                  "nodeA",
+                  "nodeB",
+                  "nodeC",
+                  "nodeD",
+                  "nodeE",
+                  "nodeF",
+                  "nodeG",
+                  "nodeH",
+                  "nodeI",
+                  "nodeJ",
+                  "nodeK",
+                  "nodeL"
+                ],
                 "properties": {
                   "nodeA": {
                     "type": "boolean"
@@ -8386,16 +8549,30 @@
           },
           "endGameRobot1": {
             "type": "string",
-            "enum": ["None", "Parked", "ShallowCage", "DeepCage"]
+            "enum": [
+              "None",
+              "Parked",
+              "ShallowCage",
+              "DeepCage"
+            ]
           },
           "endGameRobot2": {
             "type": "string",
-            "enum": ["None", "Parked", "ShallowCage", "DeepCage"]
-
+            "enum": [
+              "None",
+              "Parked",
+              "ShallowCage",
+              "DeepCage"
+            ]
           },
           "endGameRobot3": {
             "type": "string",
-            "enum": ["None", "Parked", "ShallowCage", "DeepCage"]
+            "enum": [
+              "None",
+              "Parked",
+              "ShallowCage",
+              "DeepCage"
+            ]
           },
           "foulCount": {
             "type": "integer"
@@ -8442,7 +8619,19 @@
               "topRow": {
                 "type": "object",
                 "required": [
-                  "nodeA", "nodeB", "nodeC", "nodeD", "nodeE", "nodeF", "nodeG", "nodeH", "nodeI", "nodeJ", "nodeK", "nodeL"],
+                  "nodeA",
+                  "nodeB",
+                  "nodeC",
+                  "nodeD",
+                  "nodeE",
+                  "nodeF",
+                  "nodeG",
+                  "nodeH",
+                  "nodeI",
+                  "nodeJ",
+                  "nodeK",
+                  "nodeL"
+                ],
                 "properties": {
                   "nodeA": {
                     "type": "boolean"
@@ -8485,7 +8674,19 @@
               "midRow": {
                 "type": "object",
                 "required": [
-                  "nodeA", "nodeB", "nodeC", "nodeD", "nodeE", "nodeF", "nodeG", "nodeH", "nodeI", "nodeJ", "nodeK", "nodeL"],
+                  "nodeA",
+                  "nodeB",
+                  "nodeC",
+                  "nodeD",
+                  "nodeE",
+                  "nodeF",
+                  "nodeG",
+                  "nodeH",
+                  "nodeI",
+                  "nodeJ",
+                  "nodeK",
+                  "nodeL"
+                ],
                 "properties": {
                   "nodeA": {
                     "type": "boolean"
@@ -8528,7 +8729,19 @@
               "botRow": {
                 "type": "object",
                 "required": [
-                  "nodeA", "nodeB", "nodeC", "nodeD", "nodeE", "nodeF", "nodeG", "nodeH", "nodeI", "nodeJ", "nodeK", "nodeL"],
+                  "nodeA",
+                  "nodeB",
+                  "nodeC",
+                  "nodeD",
+                  "nodeE",
+                  "nodeF",
+                  "nodeG",
+                  "nodeH",
+                  "nodeI",
+                  "nodeJ",
+                  "nodeK",
+                  "nodeL"
+                ],
                 "properties": {
                   "nodeA": {
                     "type": "boolean"
@@ -8816,6 +9029,53 @@
           "year": {
             "type": "integer",
             "description": "Year this district participated."
+          }
+        }
+      },
+      "District_Recap": {
+        "required": [
+          "year",
+          "num_teams",
+          "num_events",
+          "dcmp_impact_winners",
+          "dcmp_winning_alliances",
+          "dcmp_finalist_alliances"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "description": "Year of the district."
+          },
+          "num_teams": {
+            "type": "integer",
+            "description": "Number of teams in the district."
+          },
+          "num_events": {
+            "type": "integer",
+            "description": "Number of events in the district."
+          },
+          "dcmp_impact_winners": {
+            "type": "array",
+            "description": "List of teams that won the district championship Impact or Chairman's award.",
+            "items": {
+              "type": "string",
+              "description": "TBA team key for the team."
+            }
+          },
+          "dcmp_winning_alliances": {
+            "type": "array",
+            "description": "List of winning alliances at the district championships.",
+            "items": {
+              "$ref": "#/components/schemas/Elimination_Alliance"
+            }
+          },
+          "dcmp_finalist_alliances": {
+            "type": "array",
+            "description": "List of finalist alliances at the district championships.",
+            "items": {
+              "$ref": "#/components/schemas/Elimination_Alliance"
+            }
           }
         }
       },

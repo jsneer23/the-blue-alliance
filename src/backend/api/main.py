@@ -21,6 +21,8 @@ from backend.api.handlers.district import (
     district_history,
     district_list_year,
     district_rankings,
+    district_recap,
+    district_recaps,
     district_teams,
 )
 from backend.api.handlers.error import handle_404
@@ -139,6 +141,10 @@ api_v3.add_url_rule(
 )
 api_v3.add_url_rule(
     "/district/<string:district_key>/rankings", view_func=district_rankings
+)
+api_v3.add_url_rule("/district/<string:district_key>/recap", view_func=district_recap)
+api_v3.add_url_rule(
+    "/district/<string:district_abbreviation>/recaps", view_func=district_recaps
 )
 
 # District List

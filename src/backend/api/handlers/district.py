@@ -11,7 +11,10 @@ from backend.api.handlers.helpers.model_properties import (
 from backend.api.handlers.helpers.profiled_jsonify import profiled_jsonify
 from backend.api.handlers.helpers.track_call import track_call_after_response
 from backend.common.consts.api_version import ApiMajorVersion
+from backend.common.consts.award_type import AwardType
 from backend.common.decorators import cached_public
+from backend.common.helpers.district_recap_helper import DistrictRecapHelper
+from backend.common.models.district_recap import DistrictRecap
 from backend.common.models.keys import DistrictAbbreviation, DistrictKey
 from backend.common.queries.award_query import EventAwardsQuery
 from backend.common.queries.district_query import (
@@ -19,7 +22,10 @@ from backend.common.queries.district_query import (
     DistrictQuery,
     DistrictsInYearQuery,
 )
-from backend.common.queries.event_query import DistrictEventsQuery
+from backend.common.queries.event_query import (
+    DistrictChampsInYearQuery,
+    DistrictEventsQuery,
+)
 from backend.common.queries.team_query import DistrictTeamsQuery
 
 
@@ -126,3 +132,25 @@ def district_awards(district_key: DistrictKey) -> Response:
         awards += partial_awards
 
     return profiled_jsonify(awards)
+
+
+def district_recap(district_key: DistrictKey) -> Response:
+    """
+    Returns the district recap for a given DistrictKey.
+    """
+    track_call_after_response("district/recap", district_key)
+
+    district = DistrictQuery(district_key=district_key).fetch()
+
+    return profiled_jsonify(DistrictRecapHelper.make_recaps(districts=[district])[0])
+
+
+def district_recaps(district_abbreviation: DistrictAbbreviation) -> Response:
+    """
+    Returns the district recaps for a given district abbreviation.
+    """
+    track_call_after_response("district/recaps", district_abbreviation)
+
+    districts = DistrictAbbreviationQuery(abbreviation=district_abbreviation).fetch()
+
+    return profiled_jsonify(DistrictRecapHelper.make_recaps(districts=districts))

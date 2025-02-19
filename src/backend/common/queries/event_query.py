@@ -80,7 +80,7 @@ class RegionalEventsQuery(CachedDatabaseQuery[List[Event], List[EventDict]]):
 
 
 class DistrictChampsInYearQuery(CachedDatabaseQuery[List[Event], List[EventDict]]):
-    CACHE_VERSION = 0
+    CACHE_VERSION = 1
     CACHE_KEY_FORMAT = "district_list_{year}"
     DICT_CONVERTER = EventConverter
 

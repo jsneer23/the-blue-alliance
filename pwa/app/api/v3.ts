@@ -1,6 +1,6 @@
 /**
  * The Blue Alliance API v3
- * 3.9.10
+ * 3.9.11
  * DO NOT MODIFY - This file has been generated using oazapfts.
  * See https://www.npmjs.com/package/oazapfts
  */
@@ -749,48 +749,54 @@ export type MatchScoreBreakdown2025Alliance = {
   autoPoints?: number;
   autoReef?: {
     topRow: {
-      NodeA: boolean;
-      NodeB: boolean;
-      NodeC: boolean;
-      NodeD: boolean;
-      NodeE: boolean;
-      NodeF: boolean;
-      NodeG: boolean;
-      NodeH: boolean;
-      NodeI: boolean;
-      NodeJ: boolean;
-      NodeK: boolean;
-      NodeL: boolean;
+      nodeA: boolean;
+      nodeB: boolean;
+      nodeC: boolean;
+      nodeD: boolean;
+      nodeE: boolean;
+      nodeF: boolean;
+      nodeG: boolean;
+      nodeH: boolean;
+      nodeI: boolean;
+      nodeJ: boolean;
+      nodeK: boolean;
+      nodeL: boolean;
     };
     midRow: {
-      NodeA: boolean;
-      NodeB: boolean;
-      NodeC: boolean;
-      NodeD: boolean;
-      NodeE: boolean;
-      NodeF: boolean;
-      NodeG: boolean;
-      NodeH: boolean;
-      NodeI: boolean;
-      NodeJ: boolean;
-      NodeK: boolean;
-      NodeL: boolean;
+      nodeA: boolean;
+      nodeB: boolean;
+      nodeC: boolean;
+      nodeD: boolean;
+      nodeE: boolean;
+      nodeF: boolean;
+      nodeG: boolean;
+      nodeH: boolean;
+      nodeI: boolean;
+      nodeJ: boolean;
+      nodeK: boolean;
+      nodeL: boolean;
     };
     botRow: {
-      NodeA: boolean;
-      NodeB: boolean;
-      NodeC: boolean;
-      NodeD: boolean;
-      NodeE: boolean;
-      NodeF: boolean;
-      NodeG: boolean;
-      NodeH: boolean;
-      NodeI: boolean;
-      NodeJ: boolean;
-      NodeK: boolean;
-      NodeL: boolean;
+      nodeA: boolean;
+      nodeB: boolean;
+      nodeC: boolean;
+      nodeD: boolean;
+      nodeE: boolean;
+      nodeF: boolean;
+      nodeG: boolean;
+      nodeH: boolean;
+      nodeI: boolean;
+      nodeJ: boolean;
+      nodeK: boolean;
+      nodeL: boolean;
     };
     trough: number;
+    /** Unofficial TBA-computed value that sums the total number of game pieces scored in the botRow object. */
+    tba_botRowCount?: number;
+    /** Unofficial TBA-computed value that sums the total number of game pieces scored in the midRow object. */
+    tba_midRowCount?: number;
+    /** Unofficial TBA-computed value that sums the total number of game pieces scored in the topRow object. */
+    tba_topRowCount?: number;
   };
   bargeBonusAchieved?: boolean;
   coopertitionCriteriaMet?: boolean;
@@ -812,48 +818,54 @@ export type MatchScoreBreakdown2025Alliance = {
   teleopPoints?: number;
   teleopReef?: {
     topRow: {
-      NodeA: boolean;
-      NodeB: boolean;
-      NodeC: boolean;
-      NodeD: boolean;
-      NodeE: boolean;
-      NodeF: boolean;
-      NodeG: boolean;
-      NodeH: boolean;
-      NodeI: boolean;
-      NodeJ: boolean;
-      NodeK: boolean;
-      NodeL: boolean;
+      nodeA: boolean;
+      nodeB: boolean;
+      nodeC: boolean;
+      nodeD: boolean;
+      nodeE: boolean;
+      nodeF: boolean;
+      nodeG: boolean;
+      nodeH: boolean;
+      nodeI: boolean;
+      nodeJ: boolean;
+      nodeK: boolean;
+      nodeL: boolean;
     };
     midRow: {
-      NodeA: boolean;
-      NodeB: boolean;
-      NodeC: boolean;
-      NodeD: boolean;
-      NodeE: boolean;
-      NodeF: boolean;
-      NodeG: boolean;
-      NodeH: boolean;
-      NodeI: boolean;
-      NodeJ: boolean;
-      NodeK: boolean;
-      NodeL: boolean;
+      nodeA: boolean;
+      nodeB: boolean;
+      nodeC: boolean;
+      nodeD: boolean;
+      nodeE: boolean;
+      nodeF: boolean;
+      nodeG: boolean;
+      nodeH: boolean;
+      nodeI: boolean;
+      nodeJ: boolean;
+      nodeK: boolean;
+      nodeL: boolean;
     };
     botRow: {
-      NodeA: boolean;
-      NodeB: boolean;
-      NodeC: boolean;
-      NodeD: boolean;
-      NodeE: boolean;
-      NodeF: boolean;
-      NodeG: boolean;
-      NodeH: boolean;
-      NodeI: boolean;
-      NodeJ: boolean;
-      NodeK: boolean;
-      NodeL: boolean;
+      nodeA: boolean;
+      nodeB: boolean;
+      nodeC: boolean;
+      nodeD: boolean;
+      nodeE: boolean;
+      nodeF: boolean;
+      nodeG: boolean;
+      nodeH: boolean;
+      nodeI: boolean;
+      nodeJ: boolean;
+      nodeK: boolean;
+      nodeL: boolean;
     };
     trough: number;
+    /** Unofficial TBA-computed value that sums the total number of game pieces scored in the botRow object. */
+    tba_botRowCount?: number;
+    /** Unofficial TBA-computed value that sums the total number of game pieces scored in the midRow object. */
+    tba_midRowCount?: number;
+    /** Unofficial TBA-computed value that sums the total number of game pieces scored in the topRow object. */
+    tba_topRowCount?: number;
   };
   totalPoints?: number;
   wallAlgaeCount?: number;
@@ -1093,6 +1105,20 @@ export type Zebra = {
     /** Zebra data for teams on the blue alliance */
     blue?: ZebraTeam[];
   };
+};
+export type DistrictRecap = {
+  /** Year of the district. */
+  year: number;
+  /** Number of teams in the district. */
+  num_teams: number;
+  /** Number of events in the district. */
+  num_events: number;
+  /** List of teams that won the district championship Impact or Chairman's award. */
+  dcmp_impact_winners: string[];
+  /** List of winning alliances at the district championships. */
+  dcmp_winning_alliances: EliminationAlliance[];
+  /** List of finalist alliances at the district championships. */
+  dcmp_finalist_alliances: EliminationAlliance[];
 };
 export type DistrictRanking = {
   /** TBA team key for the team. */
@@ -3558,6 +3584,82 @@ export function getDistrictsByYear(
         status: 404;
       }
   >(`/districts/${encodeURIComponent(year)}`, {
+    ...opts,
+    headers: oazapfts.mergeHeaders(opts?.headers, {
+      'If-None-Match': ifNoneMatch,
+    }),
+  });
+}
+/**
+ * Gets a single-year recap associated with the given district key.
+ */
+export function getDistrictRecap(
+  {
+    ifNoneMatch,
+    districtKey,
+  }: {
+    ifNoneMatch?: string;
+    districtKey: string;
+  },
+  opts?: Oazapfts.RequestOpts,
+) {
+  return oazapfts.fetchJson<
+    | {
+        status: 200;
+        data: DistrictRecap;
+      }
+    | {
+        status: 304;
+      }
+    | {
+        status: 401;
+        data: {
+          /** Authorization error description. */
+          Error: string;
+        };
+      }
+    | {
+        status: 404;
+      }
+  >(`/district/${encodeURIComponent(districtKey)}/recap`, {
+    ...opts,
+    headers: oazapfts.mergeHeaders(opts?.headers, {
+      'If-None-Match': ifNoneMatch,
+    }),
+  });
+}
+/**
+ * Gets a list of recaps associated with the given district abbreviation.
+ */
+export function getDistrictRecaps(
+  {
+    ifNoneMatch,
+    districtAbbreviation,
+  }: {
+    ifNoneMatch?: string;
+    districtAbbreviation: string;
+  },
+  opts?: Oazapfts.RequestOpts,
+) {
+  return oazapfts.fetchJson<
+    | {
+        status: 200;
+        data: DistrictRecap[];
+      }
+    | {
+        status: 304;
+      }
+    | {
+        status: 401;
+        data: {
+          /** Authorization error description. */
+          Error: string;
+        };
+      }
+    | {
+        status: 404;
+      }
+  >(`/district/${encodeURIComponent(districtAbbreviation)}/recaps`, {
     ...opts,
     headers: oazapfts.mergeHeaders(opts?.headers, {
       'If-None-Match': ifNoneMatch,
