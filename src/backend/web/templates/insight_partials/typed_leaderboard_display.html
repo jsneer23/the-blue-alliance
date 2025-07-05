@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-xs-12">
+      <h3>{{ insight.title | safe }}</h3>
+      <table class="table table-striped table-condensed table-center insights-table">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Teams</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in insight.data["rankings"] %}
+          {% if loop.index <= 5 %}
+          {% if data["keys"]|length < 50 %}
+          <tr>
+            <td>{{data["value"]}}</td>
+            <td>
+              {% for team in data["keys"] %}
+              <a href="/team/{{team|digits}}/history">{{team|digits}}</a>{% if not loop.last %},{% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>

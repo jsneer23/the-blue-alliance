@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 from typing import Dict, List, Literal, Optional, Set, TypeAlias, TypedDict
 
 from google.appengine.ext import ndb
@@ -75,7 +76,7 @@ class Insight(CachedModel):
     YEAR_SPECIFIC = 1000
 
     # Used for datastore keys! Don't change unless you know what you're doing.
-    INSIGHT_NAMES = {
+    INSIGHT_NAMES: Dict[int, str] = {
         MATCH_HIGHSCORE: "match_highscore",
         MATCH_HIGHSCORE_BY_WEEK: "match_highscore_by_week",
         MATCH_AVERAGES_BY_WEEK: "match_averages_by_week",
@@ -143,6 +144,22 @@ class Insight(CachedModel):
         TYPED_LEADERBOARD_LONGEST_QUALIFYING_EVENT_STREAK: "team",
     }
 
+    TYPED_LEADERBOARD_TITLES: Dict[int, str] = defaultdict(str, {
+        TYPED_LEADERBOARD_BLUE_BANNERS: "Most Blue Banners",
+        TYPED_LEADERBOARD_MOST_NON_CHAMPS_EVENT_WINS: "Most Regional &amp; District Event Wins",
+        TYPED_LEADERBOARD_MOST_NON_CHAMPS_IMPACT_WINS: "Most Regional &amp; District Impact Award Wins",
+        TYPED_LEADERBOARD_LONGEST_QUALIFYING_EVENT_STREAK: "Longest Regional &amp; District Event Streak",
+        TYPED_LEADERBOARD_LONGEST_EINSTEIN_STREAK: "Longest Einstein Streak",
+        TYPED_LEADERBOARD_MOST_EVENTS_PLAYED_AT: "Most Events Attended",
+        TYPED_LEADERBOARD_MOST_MATCHES_PLAYED: "Most Official Matches Played",
+        TYPED_LEADERBOARD_MOST_UNIQUE_TEAMS_PLAYED_WITH_AGAINST: "Most Unique Teams Played With or Against",
+        TYPED_LEADERBOARD_MOST_AWARDS: "Most Awards",
+        TYPED_LEADERBOARD_MOST_WFFAS: "Most Woodie Flowers Finalist Awards",
+        TYPED_LEADERBOARD_HIGHEST_MATCH_CLEAN_SCORE: "Highest No-Penalty Match Score",
+        TYPED_LEADERBOARD_HIGHEST_MEDIAN_SCORE_BY_EVENT: "Highest Median Score by Event",
+        TYPED_LEADERBOARD_HIGHEST_MATCH_CLEAN_COMBINED_SCORE: "Highest No-Penalty Match Combined Score",
+    })
+
     NOTABLE_INSIGHTS = {
         TYPED_NOTABLES_DIVISION_WINNERS,
         TYPED_NOTABLES_DIVISION_FINALS_APPEARANCES,
@@ -161,6 +178,8 @@ class Insight(CachedModel):
     )  # JSON dictionary of the data of the insight
 
     district_abbreviation = ndb.StringProperty(required=False, indexed=True)
+
+    title = ndb.StringProperty(required=False, indexed=False)  # title of the insight for display
 
     created = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
     updated = ndb.DateTimeProperty(auto_now=True, indexed=False)

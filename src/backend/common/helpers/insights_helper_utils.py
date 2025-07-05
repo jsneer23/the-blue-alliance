@@ -103,7 +103,8 @@ def sort_counter_dict(
 
 
 def create_insight(
-    data: Any, name: str, year: int, district_abbreviation: Optional[str] = None
+    data: Any, name: str, year: int, district_abbreviation: Optional[str] = None,
+    title: str = "",
 ) -> Insight:
     """
     Create Insight object given data, name, and year
@@ -114,6 +115,7 @@ def create_insight(
         year=year,
         data_json=json.dumps(data),
         district_abbreviation=district_abbreviation,
+        title=title,
     )
 
 
@@ -139,4 +141,5 @@ def make_leaderboard_from_dict_counts(
         data=leaderboard_data,
         name=Insight.INSIGHT_NAMES[insight_type],
         year=year,
+        title=Insight.TYPED_LEADERBOARD_TITLES[insight_type]
     )
